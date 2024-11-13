@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label';
 const navigation = [
   { title: 'Dashboard', icon: Home, href: '/dashboard' },
   { title: 'Projects', icon: Package, href: '/projects' },
-  { title: 'Integrations', icon: Layout, href: '/integrations' },
+  { title: 'Integrations', icon: Layout, href: '/integration' },
   { title: 'Members', icon: 'Users', href: '/members' },
   { title: 'Settings', icon: SettingsIcon, href: '/settings', isActive: true },
 ];
