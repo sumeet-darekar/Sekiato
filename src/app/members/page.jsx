@@ -1,0 +1,165 @@
+'use client'
+
+import React, { useState, useEffect } from 'react';
+import { Bell, Home, Layout, Package, Settings, Shield, Users } from 'lucide-react';
+import Link from 'next/link';
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+
+const navigation = [
+  { title: 'Dashboard', icon: Home, href: '/' },
+  { title: 'Projects', icon: Package, href: '/projects' },
+  { title: 'Integrations', icon: Layout, href: '/integrations' },
+  { title: 'Members', icon: Users, href: '/members', isActive: true },
+  { title: 'Settings', icon: Settings, href: '/settings' },
+];
+
+// Mock data fetching function for members
+const fetchMembers = async () => {
+  // Replace with real API call
+  return [
+    { id: 1, name: 'Alice', role: 'Admin', avatar: '/placeholder.svg' },
+    { id: 2, name: 'Bob', role: 'Developer', avatar: '/placeholder.svg' },
+    { id: 3, name: 'Charlie', role: 'Designer', avatar: '/placeholder.svg' },
+  ];
+};
+
+const MembersPage = () => {
+  const [members, setMembers] = useState([]);
+  const [newMemberName, setNewMemberName] = useState('');
+  const [newMemberRole, setNewMemberRole] = useState('');
+
+  useEffect(() => {
+    // Fetch members data when the component mounts
+    const getMembers = async () => {
+      const data = await fetchMembers();
+      setMembers(data);
+    };
+
+    getMembers();
+  }, []);
+
+  const addMember = () => {
+    if (newMemberName.trim() && newMemberRole.trim()) {
+      const newMember = {
+        id: Date.now(),
+        name: newMemberName,
+        role: newMemberRole,
+        avatar: '/placeholder.svg', // Default avatar image
+      };
+      setMembers([...members, newMember]);
+      setNewMemberName('');
+      setNewMemberRole('');
+    }
+  };
+
+  const removeMember = (id) => {
+    setMembers(members.filter((member) => member.id !== id));
+  };
+
+  return (
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
+      <div className={`w-64 bg-gray-900 text-white`}>
+        <div className="flex h-16 items-center gap-2 border-b border-gray-800 px-4">
+          <Shield className="h-8 w-8 text-blue-500" />
+          <span className="text-xl font-semibold">SekiAto</span>
+        </div>
+        <nav className="flex flex-col gap-1 p-4">
+          {navigation.map((item) => (
+            <Link
+              key={item.title}
+              href={item.href}
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
+                item.isActive
+                  ? 'bg-gray-800 text-white'
+                  : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+              }`}
+            >
+              <item.icon className="h-5 w-5" />
+              {item.title}
+            </Link>
+          ))}
+        </nav>
+      </div>
+
+      <div className="flex-1 overflow-auto">
+        <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b bg-white px-6 dark:bg-gray-800">
+          <div className="flex items-center gap-4">
+            <h1 className="text-3xl font-semibold">Members</h1>
+          </div>
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="icon">
+              <Bell className="h-5 w-5" />
+            </Button>
+            <Avatar className="h-8 w-8">
+              <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
+              <AvatarFallback>U</AvatarFallback>
+            </Avatar>
+          </div>
+        </header>
+
+        <main className="p-6">
+          <Card className="mb-6">
+            <CardHeader>
+              <CardTitle>Manage Members</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center mb-4">
+                <Input
+                  placeholder="Enter member name"
+                  value={newMemberName}
+                  onChange={(e) => setNewMemberName(e.target.value)}
+                />
+                <Input
+                  placeholder="Enter member role"
+                  value={newMemberRole}
+                  onChange={(e) => setNewMemberRole(e.target.value)}
+                  className="ml-2"
+                />
+                <Button onClick={addMember} className="ml-2">
+                  Add Member
+                </Button>
+              </div>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Avatar</TableHead>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Role</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {members.map((member) => (
+                    <TableRow key={member.id}>
+                      <TableCell>
+                        <Avatar>
+                          <AvatarImage src={member.avatar} alt={member.name} />
+                          <AvatarFallback>{member.name[0]}</AvatarFallback>
+                        </Avatar>
+                      </TableCell>
+                      <TableCell>{member.name}</TableCell>
+                      <TableCell>{member.role}</TableCell>
+                      <TableCell>
+                        <Button onClick={() => removeMember(member.id)} className="text-red-500">
+                          Remove
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default MembersPage;
+

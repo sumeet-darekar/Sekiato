@@ -1,19 +1,19 @@
 'use client'
 
-import React, { useState } from 'react'
-import { Bell, ChevronDown, Home, Layout, Package, Search, Settings, Shield, Users } from 'lucide-react'
-import Link from 'next/link'
+import React, { useState } from 'react';
+import { Bell, ChevronDown, Home, Layout, Package, Search, Settings, Shield, Users } from 'lucide-react';
+import Link from 'next/link';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -21,35 +21,34 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
+} from '@/components/ui/table';
 
 const navigation = [
   { title: 'Dashboard', icon: Home, href: '#', isActive: true },
-  { title: 'Projects', icon: Package, href: '#' },
-  { title: 'Integrations', icon: Layout, href: '#' },
-  { title: 'Members', icon: Users, href: '#' },
-  { title: 'Settings', icon: Settings, href: '#' },
-]
+  { title: 'Projects', icon: Package, href: '/projects' },
+  { title: 'Integrations', icon: Layout, href: '/integration' },
+  { title: 'Members', icon: Users, href: '/members' },
+  { title: 'Settings', icon: Settings, href: '/settings' },
+];
 
 const pendingTasks = [
   { id: 1, project: 'frontend-app', issues: { critical: 0, high: 1, medium: 0, low: 0 } },
   { id: 2, project: 'backend-api', issues: { critical: 1, high: 2, medium: 3, low: 1 } },
   { id: 3, project: 'mobile-app', issues: { critical: 0, high: 0, medium: 2, low: 4 } },
-]
+];
 
 const vulnerableProjects = [
   { id: 1, project: 'backend-api', tested: '15 hours ago', issues: { critical: 0, high: 5, medium: 0, low: 6 } },
   { id: 2, project: 'mobile-app', tested: '4 days ago', issues: { critical: 0, high: 3, medium: 0, low: 4 } },
   { id: 3, project: 'database-service', tested: 'a day ago', issues: { critical: 0, high: 1, medium: 0, low: 0 } },
   { id: 4, project: 'auth-service', tested: '2 days ago', issues: { critical: 1, high: 2, medium: 3, low: 1 } },
-]
+];
 
 const SecurityDashboard = () => {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
-      {/* Sidebar */}
       <div className={`w-64 bg-gray-900 text-white`}>
         <div className="flex h-16 items-center gap-2 border-b border-gray-800 px-4">
           <Shield className="h-8 w-8 text-blue-500" />
@@ -73,9 +72,7 @@ const SecurityDashboard = () => {
         </nav>
       </div>
 
-      {/* Main content */}
       <div className="flex-1 overflow-auto">
-        {/* Header */}
         <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b bg-white px-6 dark:bg-gray-800">
           <div className="flex items-center gap-4">
             <div className="relative">
@@ -108,7 +105,6 @@ const SecurityDashboard = () => {
           </div>
         </header>
 
-        {/* Main content */}
         <main className="p-6">
           <div className="mb-6 flex items-center justify-between">
             <h1 className="text-3xl font-semibold">Security Dashboard</h1>
@@ -162,7 +158,6 @@ const SecurityDashboard = () => {
           </div>
 
           <div className="mt-6 grid gap-6 lg:grid-cols-2">
-            {/* Top pending tasks */}
             <Card>
               <CardHeader>
                 <CardTitle>Top Pending Tasks</CardTitle>
@@ -198,15 +193,15 @@ const SecurityDashboard = () => {
                               </span>
                             </span>
                             <span className="flex items-center gap-1">
-                              <span className="h-5 rounded bg-blue-100 px-1.5 font-medium text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+                              <span className="h-5 rounded bg-green-100 px-1.5 font-medium text-green-700 dark:bg-green-900 dark:text-green-300">
                                 {task.issues.low}L
                               </span>
                             </span>
                           </div>
                         </TableCell>
                         <TableCell className="text-right">
-                          <Button variant="outline" size="sm">
-                            Fix vulnerabilities
+                          <Button size="sm" variant="outline">
+                            Fix Issues
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -216,28 +211,24 @@ const SecurityDashboard = () => {
               </CardContent>
             </Card>
 
-            {/* Top vulnerable projects */}
             <Card>
               <CardHeader>
-                <CardTitle>Top Vulnerable Projects</CardTitle>
+                <CardTitle>Most Vulnerable Projects</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="w-[30%]">Project</TableHead>
-                      <TableHead className="w-[20%]">Tested</TableHead>
-                      <TableHead>Issues</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
+                      <TableHead className="w-[40%]">Project</TableHead>
+                      <TableHead>Last Tested</TableHead>
+                      <TableHead>Vulnerabilities</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {vulnerableProjects.map((project) => (
                       <TableRow key={project.id}>
                         <TableCell className="font-medium">{project.project}</TableCell>
-                        <TableCell className="text-muted-foreground">
-                          {project.tested}
-                        </TableCell>
+                        <TableCell>{project.tested}</TableCell>
                         <TableCell>
                           <div className="flex gap-2">
                             <span className="flex items-center gap-1">
@@ -256,16 +247,11 @@ const SecurityDashboard = () => {
                               </span>
                             </span>
                             <span className="flex items-center gap-1">
-                              <span className="h-5 rounded bg-blue-100 px-1.5 font-medium text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+                              <span className="h-5 rounded bg-green-100 px-1.5 font-medium text-green-700 dark:bg-green-900 dark:text-green-300">
                                 {project.issues.low}L
                               </span>
                             </span>
                           </div>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Button variant="outline" size="sm">
-                            Fix vulnerabilities
-                          </Button>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -277,7 +263,8 @@ const SecurityDashboard = () => {
         </main>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SecurityDashboard
+export default SecurityDashboard;
+
