@@ -13,7 +13,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 const navigation = [
   { title: 'Dashboard', icon: Home, href: '/' },
   { title: 'Projects', icon: Package, href: '/projects' },
-  { title: 'Integrations', icon: Layout, href: '/integrations' },
+  { title: 'Integrations', icon: Layout, href: '/integration' },
   { title: 'Members', icon: Users, href: '/members', isActive: true },
   { title: 'Settings', icon: Settings, href: '/settings' },
 ];
