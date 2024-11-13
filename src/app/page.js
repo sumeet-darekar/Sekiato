@@ -12,7 +12,7 @@ import { Progress } from '@/components/ui/progress';
 const navigation = [
   { title: 'Dashboard', icon: Home, href: '/dashboard' },
   { title: 'Projects', icon: Package, href: '/projects' },
-  { title: 'Integrations', icon: 'GitHub', href: '/integrations' },
+  { title: 'Integrations', icon: 'GitHub', href: '/integration' },
   { title: 'Members', icon: User, href: '/members' },
   { title: 'Settings', icon: SettingsIcon, href: '/settings' },
 ];
