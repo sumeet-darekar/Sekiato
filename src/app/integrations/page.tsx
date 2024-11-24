@@ -95,7 +95,7 @@ export default function IntegrationsPage() {
   }
 
   const handleGitHubAuth = () => {
-    const clientId = "Ov23lirbxgwLOaLYSMdy"
+    const clientId = "Ov23liccsAzHqQBf1vJl"
     
     if (!clientId) {
       console.error("GitHub Client ID not configured")
