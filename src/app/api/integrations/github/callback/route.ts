@@ -12,7 +12,7 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         client_id: "Ov23lirbxgwLOaLYSMdy",
-        client_secret: "56ff203a81d7b26292f64a4b5796e8b5ddebddaf",
+        client_secret: "1930fa2ab436c13d6ef3b3c3accf4b7f42e48502",
         code,
       }),
     })
