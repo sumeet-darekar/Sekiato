@@ -7,4 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Your models go here 
+model Repository {
+  id              String   @id @default(cuid())
+  name            String
+  fullName        String   @unique
+  private         Boolean
+  owner           String
+  description     String?
+  defaultBranch   String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// Add any other models your application needs
