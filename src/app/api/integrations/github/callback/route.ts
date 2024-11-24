@@ -11,7 +11,7 @@ export async function POST(request: Request) {
         'Accept': 'application/json',
       },
       body: JSON.stringify({
-        client_id: "Ov23lirbxgwLOaLYSMdy",
+        client_id: "Ov23liccsAzHqQBf1vJl",
         client_secret: "1930fa2ab436c13d6ef3b3c3accf4b7f42e48502",
         code,
       }),
